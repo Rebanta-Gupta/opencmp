@@ -15,6 +15,17 @@
 # <https://www.gnu.org/licenses/>.                                                                                     #
 ########################################################################################################################
 
+import sys
+
+def _suppress_keyboard_interrupt_traceback(exc_type, exc_value, exc_traceback):
+    if issubclass(exc_type, KeyboardInterrupt):
+        print()
+        exit(0)
+    else:
+        sys.__excepthook__(exc_type, exc_value, exc_traceback)
+
+sys.excepthook = _suppress_keyboard_interrupt_traceback
+
 from . import models
 from . import solvers
 from . import helpers
